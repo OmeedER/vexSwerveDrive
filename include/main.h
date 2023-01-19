@@ -26,6 +26,13 @@
 #define MAIN_H_
 
 #include <API.h>
+#include "math.h"
+#include "swerve.h"
+#define IME_MOTOR_1 0
+#define IME_MOTOR_2 1
+#define IME_MOTOR_3 2
+#define IME_MOTOR_4 3
+#define NUMBER_OF_IME 4
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
