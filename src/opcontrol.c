@@ -27,8 +27,10 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
-	while (1) {
-		printf("Hello PROS User!\n");
-		delay(20);
-	}
-}
+ int counts;
+ while(true){
+ swerve();
+ turn();
+ zero();
+ delay(20);
+}}
