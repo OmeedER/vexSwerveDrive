@@ -25,11 +25,13 @@ void swerve(){
  motorSet(2, speed);
  motorSet(3, speed);
  motorSet(4, speed);
- motorSet(6, speed);
+ motorSet(5, speed);
  }
  else{
  motorStopAll();
  }
+ printf("D1: %d", imeGet(IME_MOTOR_1, &counts));
+ printf("\nD2: %d", imeGet(IME_MOTOR_2, &counts));
  delay(20);
 }
 
