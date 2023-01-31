@@ -36,10 +36,10 @@ void swerve(){
 }
 
 void turn(){
-  motorSet(6, kp*(180-(imeGet(IME_MOTOR_1, &counts)*27/79)));
-  motorSet(7, kp*(-180-(imeGet(IME_MOTOR_2, &counts)*27/79)));
-  motorSet(8, -kp*(180-(imeGet(IME_MOTOR_3, &counts)*27/79)));
-  motorSet(9, -kp*(-180-(imeGet(IME_MOTOR_4, &counts)*27/79)));
+  motorSet(6, kp*(0-(imeGet(IME_MOTOR_1, &counts)*27/79)));
+  motorSet(7, kp*(0-(imeGet(IME_MOTOR_2, &counts)*27/79)));
+  motorSet(8, -kp*(0-(imeGet(IME_MOTOR_3, &counts)*27/79)));
+  motorSet(9, -kp*(0-(imeGet(IME_MOTOR_4, &counts)*27/79)));
  /*if(joystickGetDigital(1, 8, JOY_DOWN) == 1){
  delay(100);
  while(joystickGetDigital(1, 8, JOY_DOWN) == 0){

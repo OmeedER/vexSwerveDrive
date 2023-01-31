@@ -27,11 +27,10 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
- float counts;
+ int counts;
  while(true){
- printf("\nD1: %f", imeGet(IME_MOTOR_1, &counts));
-/* swerve();
+ swerve();
  turn();
- zero();*/
- delay(200);
+ zero();
+ delay(20);
 }}
