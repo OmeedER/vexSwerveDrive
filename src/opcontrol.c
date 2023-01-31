@@ -32,5 +32,5 @@ void operatorControl() {
  swerve();
  turn();
  zero();
- delay(20);
+ delay(400);
 }}
