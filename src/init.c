@@ -34,7 +34,7 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
- int counts;
+ //int counts;
  int IMECount = imeInitializeAll();
  if(IMECount != NUMBER_OF_IME){
  

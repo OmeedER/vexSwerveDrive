@@ -30,16 +30,15 @@ void swerve(){
  else{
  motorStopAll();
  }
- printf("\nD1: %f", imeGet(IME_MOTOR_1, &counts));
+ printf("\nD1: %d", imeGet(IME_MOTOR_1, &counts));
  printf("\nD2: %d", imeGet(IME_MOTOR_2, &counts));
- delay(20);
 }
 
 void turn(){
   motorSet(6, kp*(0-(imeGet(IME_MOTOR_1, &counts)*27/79)));
-  motorSet(7, kp*(90-(imeGet(IME_MOTOR_2, &counts)*27/79)));
+  motorSet(7, kp*(0-(imeGet(IME_MOTOR_2, &counts)*27/79)));
   motorSet(8, -kp*(0-(imeGet(IME_MOTOR_3, &counts)*27/79)));
-  motorSet(9, -kp*(90-(imeGet(IME_MOTOR_4, &counts)*27/79)));
+  motorSet(9, -kp*(0-(imeGet(IME_MOTOR_4, &counts)*27/79)));
  /*if(joystickGetDigital(1, 8, JOY_DOWN) == 1){
  delay(100);
  while(joystickGetDigital(1, 8, JOY_DOWN) == 0){
@@ -56,11 +55,11 @@ void turn(){
   }
 }*/}
 
-void zero(){
+/*void zero(){
  if(joystickGetDigital(1, 8, JOY_UP) == 1){
  imeReset(IME_MOTOR_1);
  imeReset(IME_MOTOR_2);
  imeReset(IME_MOTOR_3);
  imeReset(IME_MOTOR_4);
  }
-}
+}*/
