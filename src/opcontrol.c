@@ -28,9 +28,10 @@
  */
 void operatorControl() {
  int counts;
+ int distance = ultrasonicGet(sonar);
  while(true){
  swerve();
- turn();
+ //turn();
  //zero();
  delay(400);
 }}

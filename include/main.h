@@ -33,6 +33,10 @@
 #define IME_MOTOR_3 2
 #define IME_MOTOR_4 3
 #define NUMBER_OF_IME 4
+#define sonar_orange 2
+#define sonar_yellow 1
+extern sonar;
+
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
