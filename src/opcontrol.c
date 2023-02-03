@@ -32,9 +32,9 @@ Ultrasonic sonar;
 void operatorControl() {
  sonar = ultrasonicInit(2, 1);
  int distance = ultrasonicGet(sonar);
- //printf("Distance:%d \n", distance);
  while(true){
- swerve();
+ printf("Distance:%d \n", distance);
+ //swerve();
  //turn();
  //zero();
  delay(400);
