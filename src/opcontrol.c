@@ -31,7 +31,7 @@ Ultrasonic sonar;
 
 void operatorControl() {
  sonar = ultrasonicInit(2, 1);
- //int distance = ultrasonicGet(sonar);
+ int distance = ultrasonicGet(sonar);
  //printf("Distance:%d \n", distance);
  while(true){
  swerve();
