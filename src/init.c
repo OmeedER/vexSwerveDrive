@@ -18,6 +18,7 @@
  * configure a UART port (usartOpen()) but cannot set up an LCD (lcdInit()).
  */
 void initializeIO() {
+ watchdogInit();
 }
 
 /*
@@ -33,8 +34,8 @@ void initializeIO() {
  * will not start. An autonomous mode selection menu like the pre_auton() in other environments
  * can be implemented in this task if desired.
  */
+
 void initialize() {
- //int counts;
  int IMECount = imeInitializeAll();
  if(IMECount != NUMBER_OF_IME){
  

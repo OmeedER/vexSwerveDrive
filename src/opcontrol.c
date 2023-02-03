@@ -8,6 +8,7 @@
  */
 
 #include "main.h"
+Ultrasonic sonar;
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the
@@ -26,9 +27,12 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+
+
 void operatorControl() {
- int counts;
- int distance = ultrasonicGet(sonar);
+ sonar = ultrasonicInit(2, 1);
+ //int distance = ultrasonicGet(sonar);
+ //printf("Distance:%d \n", distance);
  while(true){
  swerve();
  //turn();
