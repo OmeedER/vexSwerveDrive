@@ -28,16 +28,30 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
  
+float target_dist = 30;
+int tempDistance;
+int distance;
+float speed;
+//int direction;
+float kp = 5;
+
+ void follow1D(Distance){
+//if (abs(Distance - target_dist) > 5) {
+speed =  (Distance - target_dist) * kp;
+motorSet(2, speed);
+motorSet(3, speed);
+motorSet(4, speed);
+motorSet(5, speed);
+}
 
 void operatorControl() {
  Ultrasonic sonar;
  sonar = ultrasonicInit(2,1);
- int distance = ultrasonicGet(sonar);
  while(true){
  distance = ultrasonicGet(sonar);
- printf("Distance:%d \n", distance);
+ follow1D(distance);
  //swerve();
  //turn();
  //zero();
- delay(400);
+ delay(30);
 }}
