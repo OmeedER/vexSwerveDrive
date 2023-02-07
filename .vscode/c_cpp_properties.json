@@ -5,7 +5,8 @@
       "includePath": [
         "${workspaceFolder}/**",
         "c:\\Users\\P6 Robotics\\Desktop\\Vex Swerve\\vexSwerveDrive\\include",
-        "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive/include"
+        "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive/include",
+        "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive-1/include"
       ],
       "defines": [
         "_DEBUG",
@@ -16,10 +17,17 @@
       "cStandard": "c17",
       "cppStandard": "c++17",
       "intelliSenseMode": "gcc-arm",
+<<<<<<< HEAD
       "compileCommands": "c:\\Users\\P6 Robotics\\Desktop\\Vex Swerve\\vexSwerveDrive\\compile_commands.json",
       "browse": {
         "path": [
           "c:\\Users\\P6 Robotics\\Desktop\\Vex Swerve\\vexSwerveDrive"
+=======
+      "compileCommands": "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive-1/compile_commands.json",
+      "browse": {
+        "path": [
+          "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive-1"
+>>>>>>> be09eab0be731c8f704e8db139e4b2899c969c23
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""
