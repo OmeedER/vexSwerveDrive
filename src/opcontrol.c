@@ -5,7 +5,7 @@
  *
  * PROS contains FreeRTOS (http://www.freertos.org) whose source code may be
  * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
- */
+*/
 
 #include "main.h"
 
@@ -26,22 +26,21 @@
  * recommended to give other tasks (including system tasks such as updating LCDs) time to run.
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
- */
+*/
  
 float target_dist = 30;
 int tempDistance;
 int distance;
-float speed;
-//int direction;
-float kp = 5;
+float sonar_speed;
+float sonar_kp = 5;
 
- void follow1D(Distance){
+void follow1D(int Distance){
 //if (abs(Distance - target_dist) > 5) {
-speed =  (Distance - target_dist) * kp;
-motorSet(2, speed);
-motorSet(3, speed);
-motorSet(4, speed);
-motorSet(5, speed);
+sonar_speed =  (Distance - target_dist) * sonar_kp;
+motorSet(2, sonar_speed);
+motorSet(3, sonar_speed);
+motorSet(4, sonar_speed);
+motorSet(5, sonar_speed);
 }
 
 void operatorControl() {
