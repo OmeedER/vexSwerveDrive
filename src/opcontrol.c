@@ -30,12 +30,12 @@
  
 float target_dist = 30;
 int tempDistance;
-int distance;
+int DistanceLeft;
+int DistanceRight;
 float sonar_speed;
-float sonar_kp = 5;
+float sonar_kp = 10;
 
 void follow1D(int Distance){
-//if (abs(Distance - target_dist) > 5) {
 sonar_speed =  (Distance - target_dist) * sonar_kp;
 motorSet(2, sonar_speed);
 motorSet(3, sonar_speed);
@@ -43,14 +43,49 @@ motorSet(4, sonar_speed);
 motorSet(5, sonar_speed);
 }
 
+void follow2D(int distanceLeft, int distanceRight){
+	int avg_Dist = (distanceLeft + distanceRight)/2;
+	sonar_speed =  (avg_Dist - target_dist) * sonar_kp;
+	if (distanceLeft < distanceRight) {
+		int speedChange = (distanceRight-distanceLeft) * sonar_kp;
+        motorSet(2, sonar_speed);
+		motorSet(3, sonar_speed);
+		motorSet(4, sonar_speed+speedChange);
+		motorSet(5, sonar_speed+speedChange);
+	}
+	/*if (distanceLeft > distanceRight) {
+		int speedChange = (distanceLeft-distanceRight) * sonar_kp;
+		motorSet(2, sonar_speed+speedChange);
+		motorSet(3, sonar_speed+speedChange);
+        motorSet(4, sonar_speed);
+		motorSet(5, sonar_speed);
+	}
+     else{
+        motorSet(2, sonar_speed);
+		motorSet(3, sonar_speed);
+		motorSet(4, sonar_speed);
+		motorSet(5, sonar_speed);
+    }*/
+    
+}
+
+void holdTurn(){
+motorSet(6, 3);
+motorSet(7, 3);
+motorSet(8, 3);
+motorSet(9, 3);   
+}
+
 void operatorControl() {
- Ultrasonic sonar;
- sonar = ultrasonicInit(2,1);
+ Ultrasonic sonarLeft;
+ Ultrasonic sonarRight;
+ sonarRight = ultrasonicInit(2,1);
+ sonarLeft = ultrasonicInit(4,3);
  while(true){
- distance = ultrasonicGet(sonar);
- follow1D(distance);
- //swerve();
- //turn();
- //zero();
- delay(30);
+ DistanceLeft = ultrasonicGet(sonarLeft);
+ DistanceRight = ultrasonicGet(sonarRight);
+ printf("SonarLeft:%d   SonarRight:%d \n", DistanceLeft, DistanceRight);
+ holdTurn();
+ follow2D(DistanceLeft, DistanceRight);
+ delay(50);
 }}
