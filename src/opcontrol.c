@@ -24,22 +24,43 @@ void follow1D(int Distance){
 void follow2D(int DistanceLeft, int DistanceRight){
 	speedLeft = (DistanceLeft - target_dist) * sonar_kp;
 	speedRight = (DistanceRight - target_dist) * sonar_kp;
+    if(DistanceLeft == -1){
+        speedLeft = 127;
+    }
+
+    if(DistanceRight == -1){
+        speedRight = 127;
+    }
+    if(DistanceLeft-DistanceRight > 3){
+        motorSet(2, -speedLeft);
+	    motorSet(3, -speedLeft);
+    	motorSet(4, speedRight);
+    	motorSet(5, speedRight);
+    }
+    if(DistanceRight-DistanceLeft > 3){
+        motorSet(2, speedLeft);
+	    motorSet(3, speedLeft);
+    	motorSet(4, -speedRight);
+    	motorSet(5, -speedRight);
+    }
+    else{
     motorSet(2, speedLeft);
 	motorSet(3, speedLeft);
 	motorSet(4, speedRight);
 	motorSet(5, speedRight);
+    }
 }
 
-void holdTurn(){
+void turnTurn(){
   imeGet(IME_MOTOR_1, &counts1_M);
   imeGet(IME_MOTOR_2, &counts2_M);
   imeGet(IME_MOTOR_3, &counts3_M);
   imeGet(IME_MOTOR_4, &counts4_M);
 
-  motorSet(6, kp_M*(0 - (counts1_M * 27/79)));
-  motorSet(7, kp_M*(0 - (counts2_M * 27/79)));
-  motorSet(8, kp_M*(0 - (counts3_M * 27/79)));
-  motorSet(9, kp_M*(0 - (counts4_M * 27/79)));
+  motorSet(6, kp_M*(-45 - (counts1_M * 27/79)));
+  motorSet(7, kp_M*(45 - (counts2_M * 27/79)));
+  motorSet(8, kp_M*(45 - (counts3_M * 27/79)));
+  motorSet(9, kp_M*(-45 - (counts4_M * 27/79)));
 }
 
 void operatorControl() {
@@ -51,7 +72,7 @@ void operatorControl() {
  distanceLeft = ultrasonicGet(sonarLeft);
  distanceRight = ultrasonicGet(sonarRight);
  printf("SonarLeft:%d   SonarRight:%d \n", distanceLeft, distanceRight);
- holdTurn();
- follow2D(distanceLeft, distanceRight);
+ turnTurn();
+ //follow2D(distanceLeft, distanceRight);
  delay(50);
 }}
