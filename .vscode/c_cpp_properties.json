@@ -5,22 +5,21 @@
       "includePath": [
         "${workspaceFolder}/**",
         "c:\\Users\\P6 Robotics\\Desktop\\Vex Swerve\\vexSwerveDrive\\include",
-        "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive/include",
-        "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive-1/include"
+        "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive/include"
       ],
       "defines": [
         "_DEBUG",
         "UNICODE",
         "_UNICODE"
       ],
-      "compilerPath": "/Users/omeedeghtessadi-reed/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/arm-none-eabi-g++",
+      "compilerPath": "C:\\Program Files\\PROS\\toolchain\\usr\\bin\\arm-none-eabi-g++",
       "cStandard": "c17",
       "cppStandard": "c++17",
       "intelliSenseMode": "gcc-arm",
-      "compileCommands": "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive/compile_commands.json",
+      "compileCommands": "c:\\Users\\P6 Robotics\\Desktop\\Vex Swerve\\vexSwerveDrive\\compile_commands.json",
       "browse": {
         "path": [
-          "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive"
+          "c:\\Users\\P6 Robotics\\Desktop\\Vex Swerve\\vexSwerveDrive"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""
