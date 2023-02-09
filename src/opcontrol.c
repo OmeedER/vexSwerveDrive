@@ -1,56 +1,57 @@
-/** @file opcontrol.c
- * @brief File for operator control code
- *
- * This file should contain the user operatorControl() function and any functions related to it.
- *
- * PROS contains FreeRTOS (http://www.freertos.org) whose source code may be
- * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
-*/
-
 #include "main.h"
-
-
-/*
- * Runs the user operator control code. This function will be started in its own task with the
- * default priority and stack size whenever the robot is enabled via the Field Management System
- * or the VEX Competition Switch in the operator control mode. If the robot is disabled or
- * communications is lost, the operator control task will be stopped by the kernel. Re-enabling
- * the robot will restart the task, not resume it from where it left off.
- *
- * If no VEX Competition Switch or Field Management system is plugged in, the VEX Cortex will
- * run the operator control task. Be warned that this will also occur if the VEX Cortex is
- * tethered directly to a computer via the USB A to A cable without any VEX Joystick attached.
- *
- * Code running in this task can take almost any action, as the VEX Joystick is available and
- * the scheduler is operational. However, proper use of delay() or taskDelayUntil() is highly
- * recommended to give other tasks (including system tasks such as updating LCDs) time to run.
- *
- * This task should never exit; it should end with some kind of infinite loop, even if empty.
-*/
  
 float target_dist = 30;
-int tempDistance;
-int distance;
+int distanceLeft;
+int distanceRight;
 float sonar_speed;
-float sonar_kp = 5;
+float speedLeft;
+float speedRight;
+float sonar_kp = 8;
+int counts1_M;
+int counts2_M;
+int counts3_M;
+int counts4_M;
+float kp_M = 1.4;
 
 void follow1D(int Distance){
-//if (abs(Distance - target_dist) > 5) {
-sonar_speed =  (Distance - target_dist) * sonar_kp;
-motorSet(2, sonar_speed);
-motorSet(3, sonar_speed);
-motorSet(4, sonar_speed);
-motorSet(5, sonar_speed);
+	sonar_speed =  (Distance - target_dist) * sonar_kp;
+	motorSet(2, sonar_speed);
+	motorSet(3, sonar_speed);
+	motorSet(4, sonar_speed);
+	motorSet(5, sonar_speed);
+}
+
+void follow2D(int DistanceLeft, int DistanceRight){
+	speedLeft = (DistanceLeft - target_dist) * sonar_kp;
+	speedRight = (DistanceRight - target_dist) * sonar_kp;
+    motorSet(2, speedLeft);
+	motorSet(3, speedLeft);
+	motorSet(4, speedRight);
+	motorSet(5, speedRight);
+}
+
+void holdTurn(){
+  imeGet(IME_MOTOR_1, &counts1_M);
+  imeGet(IME_MOTOR_2, &counts2_M);
+  imeGet(IME_MOTOR_3, &counts3_M);
+  imeGet(IME_MOTOR_4, &counts4_M);
+
+  motorSet(6, kp_M*(0 - (counts1_M * 27/79)));
+  motorSet(7, kp_M*(0 - (counts2_M * 27/79)));
+  motorSet(8, kp_M*(0 - (counts3_M * 27/79)));
+  motorSet(9, kp_M*(0 - (counts4_M * 27/79)));
 }
 
 void operatorControl() {
- Ultrasonic sonar;
- sonar = ultrasonicInit(2,1);
+ Ultrasonic sonarLeft;
+ Ultrasonic sonarRight;
+ sonarRight = ultrasonicInit(2,1);
+ sonarLeft = ultrasonicInit(4,3);
  while(true){
- distance = ultrasonicGet(sonar);
- follow1D(distance);
- //swerve();
- //turn();
- //zero();
- delay(30);
+ distanceLeft = ultrasonicGet(sonarLeft);
+ distanceRight = ultrasonicGet(sonarRight);
+ printf("SonarLeft:%d   SonarRight:%d \n", distanceLeft, distanceRight);
+ holdTurn();
+ follow2D(distanceLeft, distanceRight);
+ delay(50);
 }}
