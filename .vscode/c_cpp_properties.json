@@ -17,10 +17,10 @@
       "cStandard": "c17",
       "cppStandard": "c++17",
       "intelliSenseMode": "gcc-arm",
-      "compileCommands": "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive-1/compile_commands.json",
+      "compileCommands": "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive/compile_commands.json",
       "browse": {
         "path": [
-          "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive-1"
+          "/Users/omeedeghtessadi-reed/Desktop/Swerve_Drive/vexSwerveDrive"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""
