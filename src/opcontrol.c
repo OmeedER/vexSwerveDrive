@@ -1,78 +1,84 @@
 #include "main.h"
  
-float target_dist = 30;
+//Define all variables
 int distanceLeft;
 int distanceRight;
-float sonar_speed;
-float speedLeft;
-float speedRight;
-float sonar_kp = 8;
+int deadRange = 5;
 int counts1_M;
 int counts2_M;
 int counts3_M;
 int counts4_M;
-float kp_M = 1.4;
+float targetDist = 30;
+float avgDist;
+float sonar_speed;
+float turn_speed;
+float sonar_kp = 8;
+float turn_kp = 1.4;
 
+//1D Following
 void follow1D(int Distance){
-	sonar_speed =  (Distance - target_dist) * sonar_kp;
+//Calculate speed
+	sonar_speed = (Distance - targetDist) * sonar_kp;
+//Run drive motors
 	motorSet(2, sonar_speed);
 	motorSet(3, sonar_speed);
 	motorSet(4, sonar_speed);
 	motorSet(5, sonar_speed);
 }
 
+//2D Following
 void follow2D(int DistanceLeft, int DistanceRight){
-	speedLeft = (DistanceLeft - target_dist) * sonar_kp;
-	speedRight = (DistanceRight - target_dist) * sonar_kp;
-    if(DistanceLeft == -1){
-        speedLeft = 127;
+//Rotate robot if the left and right distances are different
+    if(abs(DistanceLeft - DistanceRight) > deadRange){
+    //Turn modules to be at 45 degrees (Rotating position)
+        motorSet(6, turn_kp*(-45 - (counts1_M * 27/79)));
+        motorSet(7, turn_kp*(45 - (counts2_M * 27/79)));
+        motorSet(8, turn_kp*(45 - (counts3_M * 27/79)));
+        motorSet(9, turn_kp*(-45 - (counts4_M * 27/79)));
+    //Drive motors based on the differnece of the sonar
+        turn_speed = (DistanceLeft - DistanceRight) * sonar_kp;
+	    motorSet(2, turn_speed);
+	    motorSet(3, turn_speed);
+	    motorSet(4, -turn_speed);
+	    motorSet(5, -turn_speed);
     }
-
-    if(DistanceRight == -1){
-        speedRight = 127;
-    }
-    if(DistanceLeft-DistanceRight > 3){
-        motorSet(2, -speedLeft);
-	    motorSet(3, -speedLeft);
-    	motorSet(4, speedRight);
-    	motorSet(5, speedRight);
-    }
-    if(DistanceRight-DistanceLeft > 3){
-        motorSet(2, speedLeft);
-	    motorSet(3, speedLeft);
-    	motorSet(4, -speedRight);
-    	motorSet(5, -speedRight);
-    }
+//Drive motors using the 1D format
     else{
-    motorSet(2, speedLeft);
-	motorSet(3, speedLeft);
-	motorSet(4, speedRight);
-	motorSet(5, speedRight);
+    //Calculate avarage distance and speed
+        avgDist = (DistanceLeft + DistanceRight)/2;
+        sonar_speed = (avgDist - targetDist) * sonar_kp;
+    //Turn modules to be at 0 degrees
+        motorSet(6, turn_kp*(-counts1_M * 27/79));
+        motorSet(7, turn_kp*(-counts2_M * 27/79));
+        motorSet(8, turn_kp*(-counts3_M * 27/79));
+        motorSet(9, turn_kp*(-counts4_M * 27/79));
+    //Run drive motors
+	    motorSet(2, sonar_speed);
+	    motorSet(3, sonar_speed);
+	    motorSet(4, sonar_speed);
+	    motorSet(5, sonar_speed);
     }
-}
-
-void turnTurn(){
-  imeGet(IME_MOTOR_1, &counts1_M);
-  imeGet(IME_MOTOR_2, &counts2_M);
-  imeGet(IME_MOTOR_3, &counts3_M);
-  imeGet(IME_MOTOR_4, &counts4_M);
-
-  motorSet(6, kp_M*(-45 - (counts1_M * 27/79)));
-  motorSet(7, kp_M*(45 - (counts2_M * 27/79)));
-  motorSet(8, kp_M*(45 - (counts3_M * 27/79)));
-  motorSet(9, kp_M*(-45 - (counts4_M * 27/79)));
 }
 
 void operatorControl() {
- Ultrasonic sonarLeft;
- Ultrasonic sonarRight;
- sonarRight = ultrasonicInit(2,1);
- sonarLeft = ultrasonicInit(4,3);
- while(true){
- distanceLeft = ultrasonicGet(sonarLeft);
- distanceRight = ultrasonicGet(sonarRight);
- printf("SonarLeft:%d   SonarRight:%d \n", distanceLeft, distanceRight);
- turnTurn();
- //follow2D(distanceLeft, distanceRight);
- delay(50);
-}}
+//Initialize sonar sensors 
+Ultrasonic sonarLeft;
+Ultrasonic sonarRight;
+sonarRight = ultrasonicInit(2,1);
+sonarLeft = ultrasonicInit(4,3);
+while(true){
+//Get the IME values
+    imeGet(IME_MOTOR_1, &counts1_M);
+    imeGet(IME_MOTOR_2, &counts2_M);
+    imeGet(IME_MOTOR_3, &counts3_M);
+    imeGet(IME_MOTOR_4, &counts4_M);
+//Get the Sonar values
+    distanceLeft = ultrasonicGet(sonarLeft);
+    distanceRight = ultrasonicGet(sonarRight);
+//Print sensor values for debugging
+    printf("SonarLeft:%d   SonarRight:%d \n", distanceLeft, distanceRight);
+//Run the sonar following code
+    follow2D(distanceLeft, distanceRight);
+    delay(40);
+    }
+}
