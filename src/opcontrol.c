@@ -28,8 +28,9 @@ void follow1D(int Distance){
 
 //2D Following
 void follow2D(int DistanceLeft, int DistanceRight){
+    printf("why no\n");
 //Rotate robot if the left and right distances are different
-    if(abs(DistanceLeft - DistanceRight) > deadRange){
+   if(abs(DistanceLeft - DistanceRight) > deadRange){
     //Turn modules to be at 45 degrees (Rotating position)
         motorSet(6, turn_kp*(-45 - (counts1_M * 27/79)));
         motorSet(7, turn_kp*(45 - (counts2_M * 27/79)));
@@ -40,10 +41,10 @@ void follow2D(int DistanceLeft, int DistanceRight){
 	    motorSet(2, turn_speed);
 	    motorSet(3, turn_speed);
 	    motorSet(4, -turn_speed);
-	    motorSet(5, -turn_speed);
+	    motorSet(5, -turn_speed); 
     }
 //Drive motors using the 1D format
-    else{
+   else{
     //Calculate avarage distance and speed
         avgDist = (DistanceLeft + DistanceRight)/2;
         sonar_speed = (avgDist - targetDist) * sonar_kp;
@@ -57,15 +58,20 @@ void follow2D(int DistanceLeft, int DistanceRight){
 	    motorSet(3, sonar_speed);
 	    motorSet(4, sonar_speed);
 	    motorSet(5, sonar_speed);
+        motorStopAll();
     }
 }
 
 void operatorControl() {
-//Initialize sonar sensors 
+//Initialize sonar sensors and reset IMEs
 Ultrasonic sonarLeft;
 Ultrasonic sonarRight;
 sonarRight = ultrasonicInit(2,1);
 sonarLeft = ultrasonicInit(4,3);
+ imeReset(IME_MOTOR_1);
+ imeReset(IME_MOTOR_2);
+ imeReset(IME_MOTOR_3);
+ imeReset(IME_MOTOR_4);
 while(true){
 //Get the IME values
     imeGet(IME_MOTOR_1, &counts1_M);
@@ -80,5 +86,6 @@ while(true){
 //Run the sonar following code
     follow2D(distanceLeft, distanceRight);
     delay(40);
+    motorStopAll();
     }
 }
