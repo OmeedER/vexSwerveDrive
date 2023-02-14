@@ -28,23 +28,8 @@ void follow1D(int Distance){
 
 //2D Following
 void follow2D(int DistanceLeft, int DistanceRight){
-    printf("why no\n");
-//Rotate robot if the left and right distances are different
-   if(abs(DistanceLeft - DistanceRight) > deadRange){
-    //Turn modules to be at 45 degrees (Rotating position)
-        motorSet(6, turn_kp*(-45 - (counts1_M * 27/79)));
-        motorSet(7, turn_kp*(45 - (counts2_M * 27/79)));
-        motorSet(8, turn_kp*(45 - (counts3_M * 27/79)));
-        motorSet(9, turn_kp*(-45 - (counts4_M * 27/79)));
-    //Drive motors based on the differnece of the sonar
-        turn_speed = (DistanceLeft - DistanceRight) * sonar_kp;
-	    motorSet(2, turn_speed);
-	    motorSet(3, turn_speed);
-	    motorSet(4, -turn_speed);
-	    motorSet(5, -turn_speed); 
-    }
-//Drive motors using the 1D format
-   else{
+//Rotate robot if the left and right distances are close
+   if(abs(DistanceLeft - DistanceRight) < deadRange){
     //Calculate avarage distance and speed
         avgDist = (DistanceLeft + DistanceRight)/2;
         sonar_speed = (avgDist - targetDist) * sonar_kp;
@@ -60,6 +45,21 @@ void follow2D(int DistanceLeft, int DistanceRight){
 	    motorSet(5, sonar_speed);
         motorStopAll();
     }
+//Turn the robot to achieve equal distances
+   else{
+    //Turn modules to be at 45 degrees (Rotating position)
+        motorSet(6, turn_kp*(-45 - (counts1_M * 27/79)));
+        motorSet(7, turn_kp*(45 - (counts2_M * 27/79)));
+        motorSet(8, turn_kp*(45 - (counts3_M * 27/79)));
+        motorSet(9, turn_kp*(-45 - (counts4_M * 27/79)));
+    //Drive motors based on the differnece of the sonar
+        turn_speed = (DistanceLeft - DistanceRight) * sonar_kp;
+	    motorSet(2, turn_speed);
+	    motorSet(3, turn_speed);
+	    motorSet(4, -turn_speed);
+	    motorSet(5, -turn_speed); 
+    }
+
 }
 
 void operatorControl() {
