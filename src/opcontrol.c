@@ -28,8 +28,10 @@ void follow1D(int Distance){
 
 //2D Following
 void follow2D(int DistanceLeft, int DistanceRight){
+    int sonarDif = abs(DistanceLeft - DistanceRight);
+    printf("Sonar Dif: %d \n", sonarDif);
 //Rotate robot if the left and right distances are close
-   if(abs(DistanceLeft - DistanceRight) < deadRange){
+   if(sonarDif < deadRange){
     //Calculate avarage distance and speed
         avgDist = (DistanceLeft + DistanceRight)/2;
         sonar_speed = (avgDist - targetDist) * sonar_kp;
@@ -43,7 +45,6 @@ void follow2D(int DistanceLeft, int DistanceRight){
 	    motorSet(3, sonar_speed);
 	    motorSet(4, sonar_speed);
 	    motorSet(5, sonar_speed);
-        motorStopAll();
     }
 //Turn the robot to achieve equal distances
    else{
